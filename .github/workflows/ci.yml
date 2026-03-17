@@ -27,3 +27,21 @@ jobs:
 
       - name: Test
         run: ctest --test-dir build -C ${{ matrix.build_type }} --output-on-failure
+
+  docker-build-and-push:
+    needs: build-and-test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Docker login to Docker Hub
+        run: docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" -p "${{ secrets.DOCKERHUB_TOKEN }}"
+
+      - name: Build Docker image
+        run: docker build -t "${{ secrets.DOCKERHUB_USERNAME }}/multithreading-proj:latest" .
+
+      - name: Push Docker image to Docker Hub
+        run: docker push "${{ secrets.DOCKERHUB_USERNAME }}/multithreading-proj:latest"

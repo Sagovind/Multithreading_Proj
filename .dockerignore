@@ -1,0 +1,9 @@
+build/
+.git/
+.vscode/
+*.sln
+*.vcxproj*
+*.user
+*.obj
+*.pdb
+*.ilk
