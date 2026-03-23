@@ -10,7 +10,7 @@ int main() {
     TaskScheduler scheduler(4);
     std::vector<std::future<int>> results;
 
-    std::cout << "Submitting jobs to the scheduler....\n";
+    std::cout << "Submitting jobs to the scheduler......\n";
     for (int i = 1; i <= 10; ++i) {
         results.push_back(scheduler.submit([i] {
             std::this_thread::sleep_for(std::chrono::milliseconds(40 * (i % 3 + 1)));
